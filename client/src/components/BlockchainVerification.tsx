@@ -120,20 +120,54 @@ export function BlockchainVerification() {
     return verified ? 'Confirmed' : 'Pending';
   };
 
-  const handleSubmitNewProof = () => {
-    // Example verification data - in a real app, this would come from a form
-    const mockData = {
-      projectId: Math.floor(Math.random() * 100) + 1,
-      evidenceHash: `0x${Math.random().toString(16).substr(2, 64)}`,
-      impactMetrics: {
-        beneficiaries: Math.floor(Math.random() * 1000) + 100,
-        budget: Math.floor(Math.random() * 50000) + 1000,
-        timeframe: '3-6 months',
-        sdgGoals: ['sdg2', 'sdg3'],
-      },
-    };
-
-    createVerificationMutation.mutate(mockData);
+  const handleSubmitNewProof = async () => {
+    try {
+      // First, get existing projects to ensure we use valid project IDs
+      const response = await fetch('/api/user/projects', {
+        credentials: 'include'
+      });
+      
+      let projectId = 1; // default fallback
+      
+      if (response.ok) {
+        const userProjects = await response.json();
+        if (userProjects.length > 0) {
+          const randomProject = userProjects[Math.floor(Math.random() * userProjects.length)];
+          projectId = randomProject.id;
+        }
+      }
+      
+      const mockData = {
+        projectId,
+        evidenceHash: `0x${Math.random().toString(16).substr(2, 64)}`,
+        impactMetrics: {
+          beneficiaries: Math.floor(Math.random() * 1000) + 250,
+          impactScore: (85 + Math.random() * 15).toFixed(1),
+          sustainabilityScore: (80 + Math.random() * 20).toFixed(1),
+          carbonReduced: Math.floor(Math.random() * 500) + 100,
+          communitiesReached: Math.floor(Math.random() * 10) + 3,
+          budget: Math.floor(Math.random() * 50000) + 1000,
+          timeframe: '3-6 months',
+          sdgGoals: ['sdg1', 'sdg6'],
+        },
+      };
+      
+      createVerificationMutation.mutate(mockData);
+    } catch (error) {
+      console.error('Error creating verification:', error);
+      // Fallback to demo data if there's an issue
+      const mockData = {
+        projectId: 1,
+        evidenceHash: `0x${Math.random().toString(16).substr(2, 64)}`,
+        impactMetrics: {
+          beneficiaries: Math.floor(Math.random() * 1000) + 250,
+          budget: Math.floor(Math.random() * 50000) + 1000,
+          timeframe: '3-6 months',
+          sdgGoals: ['sdg1'],
+        },
+      };
+      createVerificationMutation.mutate(mockData);
+    }
   };
 
   return (

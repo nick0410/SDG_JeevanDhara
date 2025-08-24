@@ -27,7 +27,7 @@ export function AIRecommendations() {
   const [recommendations, setRecommendations] = useState<AIRecommendation[]>([]);
   const [isListening, setIsListening] = useState(false);
   
-  const { showSuccess, showError } = useNotifications();
+  const { showSuccess, showError, showInfo } = useNotifications();
 
   const generateRecommendationsMutation = useMutation({
     mutationFn: async (data: { problemDescription: string; location: string; preferredSDG?: string }) => {
@@ -65,34 +65,55 @@ export function AIRecommendations() {
   };
 
   const startVoiceInput = () => {
-    if ('webkitSpeechRecognition' in window) {
-      const recognition = new (window as any).webkitSpeechRecognition();
+    // Check for multiple speech recognition APIs
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    
+    if (SpeechRecognition) {
+      const recognition = new SpeechRecognition();
       recognition.continuous = false;
       recognition.interimResults = false;
       recognition.lang = 'en-US';
+      recognition.maxAlternatives = 1;
 
       recognition.onstart = () => {
         setIsListening(true);
+        showSuccess('Voice input started. Please speak clearly...');
       };
 
       recognition.onresult = (event: any) => {
         const transcript = event.results[0][0].transcript;
         setProblemDescription(transcript);
         setIsListening(false);
+        showSuccess('Voice input captured successfully!');
       };
 
-      recognition.onerror = () => {
+      recognition.onerror = (event: any) => {
         setIsListening(false);
-        showError('Voice recognition failed', 'Please try again or type your input');
+        console.error('Speech recognition error:', event.error);
+        
+        if (event.error === 'not-allowed') {
+          showError('Microphone access denied', 'Please allow microphone access and try again');
+        } else if (event.error === 'no-speech') {
+          showError('No speech detected', 'Please try speaking again');
+        } else if (event.error === 'network') {
+          showError('Network error', 'Please check your internet connection');
+        } else {
+          showError('Voice recognition failed', 'Please try again or type your input');
+        }
       };
 
       recognition.onend = () => {
         setIsListening(false);
       };
 
-      recognition.start();
+      try {
+        recognition.start();
+      } catch (error) {
+        setIsListening(false);
+        showError('Failed to start voice input', 'Your browser may not support this feature');
+      }
     } else {
-      showError('Voice input not supported', 'Please use the text input instead');
+      showError('Voice input not supported', 'Your browser does not support voice input. Please use the text input instead.');
     }
   };
 

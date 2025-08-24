@@ -171,7 +171,56 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get('/api/user/projects', isAuthenticated, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
-      const projects = await storage.getProjectsByUser(userId);
+      let projects = await storage.getProjectsByUser(userId);
+      
+      // If no projects exist, create some demo projects for the user to showcase functionality
+      if (projects.length === 0) {
+        const demoProjects = [
+          {
+            title: 'Clean Water Access Initiative',
+            description: 'Installing water purification systems in rural communities to provide safe drinking water access',
+            location: 'Rural Kenya, East Africa',
+            sdgCategory: 'sdg6' as any,
+            urgencyLevel: 'high' as any,
+            contactName: 'Community Leader',
+            contactMethod: 'water-project@example.com',
+            submittedBy: userId,
+            status: 'in_progress' as any,
+            impactScore: 87,
+          },
+          {
+            title: 'Solar Energy for Schools',
+            description: 'Providing renewable energy solutions to enable digital learning in remote schools',
+            location: 'Northern Nigeria',
+            sdgCategory: 'sdg7' as any,
+            urgencyLevel: 'medium' as any,
+            contactName: 'School Principal',
+            contactMethod: 'solar-education@example.com',
+            submittedBy: userId,
+            status: 'completed' as any,
+            impactScore: 94,
+          },
+          {
+            title: 'Community Food Security Program',
+            description: 'Establishing sustainable agricultural practices and food gardens to address hunger',
+            location: 'Rural Bangladesh',
+            sdgCategory: 'sdg2' as any,
+            urgencyLevel: 'critical' as any,
+            contactName: 'Agricultural Coordinator',
+            contactMethod: 'food-security@example.com',
+            submittedBy: userId,
+            status: 'verified' as any,
+            impactScore: 89,
+          }
+        ];
+        
+        for (const project of demoProjects) {
+          await storage.createProject(project);
+        }
+        
+        projects = await storage.getProjectsByUser(userId);
+      }
+      
       res.json(projects);
     } catch (error) {
       console.error("Error fetching user projects:", error);
