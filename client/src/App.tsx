@@ -10,6 +10,9 @@ import { NotificationContainer, useNotifications } from "@/components/ui/notific
 import Landing from "@/pages/landing";
 import Home from "@/pages/home";
 import Dashboard from "@/pages/dashboard";
+import Explore from "@/pages/explore";
+import Submit from "@/pages/submit";
+import Verify from "@/pages/verify";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -26,9 +29,9 @@ function Router() {
         </>
       )}
       {/* Public routes available for all users */}
-      <Route path="/explore" component={Landing} />
-      <Route path="/submit" component={Landing} />
-      <Route path="/verify" component={Landing} />
+      <Route path="/explore" component={Explore} />
+      <Route path="/submit" component={Submit} />
+      <Route path="/verify" component={Verify} />
       <Route path="/help" component={Landing} />
       
       {/* Fallback to 404 */}

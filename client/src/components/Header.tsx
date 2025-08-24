@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
+import { useLanguage } from '@/hooks/useLanguage';
 import { Globe, Wallet, User, LogOut, Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export function Header() {
   const { user, isAuthenticated, isLoading } = useAuth();
+  const { currentLanguage, changeLanguage, t, getAvailableLanguages } = useLanguage();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isWalletConnected, setIsWalletConnected] = useState(false);
   const [walletAddress, setWalletAddress] = useState('');
@@ -47,26 +49,26 @@ export function Header() {
             </div>
             <div>
               <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-green-400 bg-clip-text text-transparent">
-                SDG Impact
+                {t('sdg_impact')}
               </h1>
-              <p className="text-sm text-gray-400">Verified Impact for SDG Goals</p>
+              <p className="text-sm text-gray-400">{t('verified_impact')}</p>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-8">
             <Link href="/explore" className="text-gray-300 hover:text-white transition-colors" data-testid="nav-explore">
-              Explore NGOs
+              {t('explore_ngos')}
             </Link>
             <Link href="/submit" className="text-gray-300 hover:text-white transition-colors" data-testid="nav-submit">
-              Submit Problems
+              {t('submit_problems')}
             </Link>
             <Link href="/verify" className="text-gray-300 hover:text-white transition-colors" data-testid="nav-verify">
-              Verify Proofs
+              {t('verify_proofs')}
             </Link>
             {isAuthenticated && (
               <Link href="/dashboard" className="text-gray-300 hover:text-white transition-colors" data-testid="nav-dashboard">
-                Dashboard
+                {t('dashboard')}
               </Link>
             )}
           </nav>
@@ -75,13 +77,16 @@ export function Header() {
           <div className="hidden md:flex items-center space-x-4">
             {/* Language Selector */}
             <select 
+              value={currentLanguage}
+              onChange={(e) => changeLanguage(e.target.value)}
               className="bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-sm text-white"
               data-testid="language-selector"
             >
-              <option value="en">🇺🇸 English</option>
-              <option value="es">🇪🇸 Español</option>
-              <option value="hi">🇮🇳 हिन्दी</option>
-              <option value="fr">🇫🇷 Français</option>
+              {getAvailableLanguages().map((lang) => (
+                <option key={lang.code} value={lang.code}>
+                  {lang.flag} {lang.name}
+                </option>
+              ))}
             </select>
 
             {/* MetaMask Wallet Connection */}
@@ -92,7 +97,7 @@ export function Header() {
                 data-testid="connect-wallet-button"
               >
                 <Wallet className="w-4 h-4 mr-2" />
-                Connect Wallet
+                {t('connect_wallet')}
               </Button>
             ) : (
               <div className="flex items-center space-x-3 bg-white/10 rounded-lg px-4 py-2" data-testid="wallet-connected">
@@ -123,7 +128,7 @@ export function Header() {
                 className="border-white/20 hover:bg-white/10"
                 data-testid="login-button"
               >
-                Login
+                {t('login')}
               </Button>
             ) : isAuthenticated && user ? (
               <div className="flex items-center space-x-3 bg-white/10 rounded-lg px-4 py-2" data-testid="user-profile">
