@@ -123,7 +123,7 @@ export function Header() {
             {/* Authentication */}
             {!isLoading && !isAuthenticated ? (
               <Button 
-                onClick={() => window.location.href = '/api/login'}
+                onClick={() => window.location.href = '/'}
                 variant="outline" 
                 className="border-white/20 hover:bg-white/10"
                 data-testid="login-button"
@@ -150,7 +150,7 @@ export function Header() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => window.location.href = '/api/logout'}
+                  onClick={() => window.location.href = '/'}
                   className="text-gray-400 hover:text-white"
                   data-testid="logout-button"
                 >
@@ -228,7 +228,7 @@ export function Header() {
 
               {!isLoading && !isAuthenticated ? (
                 <Button 
-                  onClick={() => window.location.href = '/api/login'}
+                  onClick={() => window.location.href = '/'}
                   variant="outline" 
                   className="w-full border-white/20"
                 >
@@ -236,7 +236,7 @@ export function Header() {
                 </Button>
               ) : isAuthenticated ? (
                 <Button
-                  onClick={() => window.location.href = '/api/logout'}
+                  onClick={() => window.location.href = '/'}
                   variant="outline"
                   className="w-full border-white/20"
                 >

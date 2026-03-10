@@ -39,7 +39,7 @@ export default function Submit() {
             <h3 className="text-xl font-semibold text-white mb-2">Login Required</h3>
             <p className="text-gray-300 mb-4">You need to be logged in to submit projects and track your impact</p>
             <Button 
-              onClick={() => window.location.href = '/api/login'}
+              onClick={() => window.location.href = '/'}
               className="bg-gradient-to-r from-blue-500 to-green-500"
               data-testid="login-to-submit"
             >
