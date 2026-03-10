@@ -310,7 +310,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         impactMetrics,
         verification: {
           method: 'AI + Human Review',
-          verifier: 'SDG Impact Platform',
+          verifier: 'JeevanDhara',
           confidence: 0.95,
         },
       };

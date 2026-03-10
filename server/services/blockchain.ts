@@ -103,7 +103,7 @@ export class BlockchainService {
         },
         verification: {
           method: 'AI + Human Review',
-          verifier: 'SDG Impact Platform',
+          verifier: 'JeevanDhara',
           confidence: 0.95,
         },
       };

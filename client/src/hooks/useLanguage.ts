@@ -13,7 +13,7 @@ const languages: Record<string, LanguageConfig> = {
     name: 'English',
     flag: '🇺🇸',
     translations: {
-      'sdg_impact': 'SDG Impact',
+      'sdg_impact': 'JeevanDhara',
       'verified_impact': 'Verified Impact for SDG Goals',
       'explore_ngos': 'Explore NGOs',
       'submit_problems': 'Submit Problems',
@@ -34,7 +34,7 @@ const languages: Record<string, LanguageConfig> = {
     name: 'Español',
     flag: '🇪🇸',
     translations: {
-      'sdg_impact': 'Impacto ODS',
+      'sdg_impact': 'JeevanDhara',
       'verified_impact': 'Impacto Verificado para Objetivos ODS',
       'explore_ngos': 'Explorar ONGs',
       'submit_problems': 'Enviar Problemas',
@@ -55,7 +55,7 @@ const languages: Record<string, LanguageConfig> = {
     name: 'हिन्दी',
     flag: '🇮🇳',
     translations: {
-      'sdg_impact': 'एसडीजी प्रभाव',
+      'sdg_impact': 'JeevanDhara',
       'verified_impact': 'एसडीजी लक्ष्यों के लिए सत्यापित प्रभाव',
       'explore_ngos': 'एनजीओ खोजें',
       'submit_problems': 'समस्याएं भेजें',
@@ -76,7 +76,7 @@ const languages: Record<string, LanguageConfig> = {
     name: 'Français',
     flag: '🇫🇷',
     translations: {
-      'sdg_impact': 'Impact ODD',
+      'sdg_impact': 'JeevanDhara',
       'verified_impact': 'Impact Vérifié pour les Objectifs ODD',
       'explore_ngos': 'Explorer les ONGs',
       'submit_problems': 'Soumettre des Problèmes',

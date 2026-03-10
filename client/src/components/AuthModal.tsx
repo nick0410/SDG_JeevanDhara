@@ -53,11 +53,10 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
   const handleLogin = async (data: LoginData) => {
     setIsLoading(true);
     try {
-      // In the real implementation, this would be handled by Replit Auth
-      // For now, we'll simulate the login process
+      // Simulate the login process
       await new Promise(resolve => setTimeout(resolve, 1500));
       
-      showSuccess('Login successful!', 'Welcome back to SDG Impact Platform');
+      showSuccess('Login successful!', 'Welcome back to JeevanDhara');
       onClose();
       loginForm.reset();
     } catch (error) {
@@ -70,11 +69,10 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
   const handleSignup = async (data: SignupData) => {
     setIsLoading(true);
     try {
-      // In the real implementation, this would be handled by Replit Auth
-      // For now, we'll simulate the signup process
+      // Simulate the signup process
       await new Promise(resolve => setTimeout(resolve, 1500));
       
-      showSuccess('Account created successfully!', 'Welcome to SDG Impact Platform');
+      showSuccess('Account created successfully!', 'Welcome to JeevanDhara');
       onClose();
       signupForm.reset();
     } catch (error) {
@@ -98,7 +96,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
           // Simulate Web3 authentication
           await new Promise(resolve => setTimeout(resolve, 2000));
           
-          showSuccess('Web3 authentication successful!', 'Welcome to SDG Impact Platform');
+          showSuccess('Web3 authentication successful!', 'Welcome to JeevanDhara');
           onClose();
         }
       } else {
@@ -111,11 +109,6 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
     }
   };
 
-  const handleReplitAuth = () => {
-    // Redirect to Replit Auth
-    window.location.href = '/api/login';
-  };
-
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="bg-slate-800 border-white/10 max-w-md" data-testid="auth-modal">
@@ -125,7 +118,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
               <UserPlus className="text-white text-2xl" />
             </div>
             <DialogTitle className="text-2xl font-bold text-white mb-2">
-              Join SDG Impact
+              Join JeevanDhara
             </DialogTitle>
             <p className="text-gray-400">Create an account to start making a difference</p>
           </div>
@@ -324,16 +317,6 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
         {/* Alternative Authentication Methods */}
         <div className="mt-6 pt-6 border-t border-white/20 space-y-3">
-          <Button
-            onClick={handleReplitAuth}
-            className="w-full bg-blue-600 hover:bg-blue-700 transition-colors"
-            disabled={isLoading}
-            data-testid="replit-auth-button"
-          >
-            <Globe className="w-4 h-4 mr-2" />
-            Continue with Replit
-          </Button>
-
           <Button
             onClick={handleMetaMaskLogin}
             className="w-full bg-orange-500 hover:bg-orange-600 transition-colors"
